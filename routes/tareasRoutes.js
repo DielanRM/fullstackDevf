@@ -10,4 +10,3 @@ router.put('/:id', updateTareas)
 router.delete('/:id', deleteTareas)
 
 module.exports = router
-//12

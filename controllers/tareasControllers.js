@@ -3,7 +3,7 @@ const Tarea = require('../model/tareaModel.js')
 
 
 const getTareas = asyncHandler(async (req, res)=>{
-    const tareas = await Tarea.find()
+    const tareas = await Tarea.find({user: req.user.idUsuario})
     res.status(200).json(tareas)
 })
 
@@ -15,7 +15,8 @@ const crearTareas = asyncHandler(async (req, res)=>{
     }
 
     const tarea = await Tarea.create({
-        texto: req.body.texto //req =es la peticion, body = la info se esta pasando atraves del body, texto = es el atributo que yo le di en el model
+        texto: req.body.texto, //req =es la peticion, body = la info se esta pasando atraves del body, texto = es el atributo que yo le di en el model
+        user: req.user.idUsuario
     })
 
     res.status(201).json(tarea)

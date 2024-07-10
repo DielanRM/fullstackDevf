@@ -30,8 +30,14 @@ const updateTareas = asyncHandler(async (req, res)=>{
         res.status(400)
         throw new Error ('Trea no encontrada')
     }else{
-        const tareaUpdated = await Tarea.findByIdAndUpdate(req.params.id, req.body, {new: true})//lo primero es de donde viene la info, 2.- lo que se va a modificar 3.- devolvera la tarea ya modificada, si fuera "false" la devuelve antes de ser modificada
-        res.status(200).json(tareaUpdated)
+        //verificar que la tarea pertenece al usuario logead
+        if (tarea.user.toString() !== req.user.id) {
+            res.status(401)
+            throw new Error ('Usuario no utorizado')
+        }else{
+            const tareaUpdated = await Tarea.findByIdAndUpdate(req.params.id, req.body, {new: true })
+            res.status(200).json(tareaUpdated)
+        }
     }
 })
 
